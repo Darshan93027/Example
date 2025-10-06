@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMI Calculator - SecureBank</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2c3e50;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .nav-link {
+            color: #666;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        .nav-link:hover {
+            background: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .page-title {
+            text-align: center;
+            color: white;
+            margin-bottom: 2rem;
+        }
+        
+        .page-title h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .page-title p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .calculator-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .calculator-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-title {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #34495e;
+            font-weight: 600;
+        }
+        
+        .form-input, .form-select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .calculate-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .result-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .result-title {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+        
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .result-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .result-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .chart-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .chart-title {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+        
+        .chart-placeholder {
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 10px;
+            padding: 3rem;
+            text-align: center;
+            color: #6c757d;
+        }
+        
+        .info-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .info-title {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #34495e;
+        }
+        
+        .info-value {
+            color: #7f8c8d;
+        }
+        
+        @media (max-width: 768px) {
+            .calculator-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="{% url 'index' %}" class="logo">🏦 SecureBank</a>
+            <div class="nav-links">
+                <a href="{% url 'index' %}" class="nav-link">Dashboard</a>
+                <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="page-title">
+            <h1>📱 EMI Calculator</h1>
+            <p>Calculate your monthly EMI payments and plan your finances effectively</p>
+        </div>
+        
+        <div class="calculator-container">
+            <div class="calculator-card">
+                <h3 class="card-title">📊 EMI Calculator</h3>
+                <form id="emiForm">
+                    <div class="form-group">
+                        <label class="form-label">Loan Amount (₹)</label>
+                        <input type="number" class="form-input" id="loanAmount" placeholder="Enter loan amount" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Interest Rate (% p.a.)</label>
+                        <input type="number" class="form-input" id="interestRate" step="0.01" placeholder="Enter interest rate" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Loan Tenure</label>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                            <input type="number" class="form-input" id="tenureYears" placeholder="Years" required>
+                            <input type="number" class="form-input" id="tenureMonths" placeholder="Months" required>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="calculate-btn">Calculate EMI</button>
+                </form>
+            </div>
+            
+            <div class="calculator-card">
+                <h3 class="card-title">💰 Loan Details</h3>
+                <form id="loanDetailsForm">
+                    <div class="form-group">
+                        <label class="form-label">Loan Type</label>
+                        <select class="form-select" id="loanType">
+                            <option value="">Select Loan Type</option>
+                            <option value="home">Home Loan</option>
+                            <option value="personal">Personal Loan</option>
+                            <option value="business">Business Loan</option>
+                            <option value="education">Education Loan</option>
+                            <option value="vehicle">Vehicle Loan</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Monthly Income (₹)</label>
+                        <input type="number" class="form-input" id="monthlyIncome" placeholder="Enter monthly income">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Existing EMIs (₹)</label>
+                        <input type="number" class="form-input" id="existingEMIs" placeholder="Enter existing EMIs">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Down Payment (₹)</label>
+                        <input type="number" class="form-input" id="downPayment" placeholder="Enter down payment">
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="result-card" id="resultCard" style="display: none;">
+            <h3 class="result-title">📈 EMI Calculation Results</h3>
+            <div class="result-grid">
+                <div class="result-item">
+                    <div class="result-label">Monthly EMI</div>
+                    <div class="result-value" id="monthlyEMI">₹0</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Total Amount</div>
+                    <div class="result-value" id="totalAmount">₹0</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Total Interest</div>
+                    <div class="result-value" id="totalInterest">₹0</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Loan Tenure</div>
+                    <div class="result-value" id="loanTenure">0 months</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <h3 class="chart-title">📊 Payment Schedule</h3>
+            <div class="chart-placeholder">
+                <h4>Payment Schedule Chart</h4>
+                <p>Visual representation of your EMI payments will be displayed here</p>
+                <p><em>Chart functionality can be implemented with Chart.js or similar library</em></p>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <h3 class="info-title">ℹ️ EMI Calculation Information</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">EMI Formula</span>
+                    <span class="info-value">EMI = [P × R × (1+R)^N] / [(1+R)^N - 1]</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">P (Principal)</span>
+                    <span class="info-value">Loan Amount</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">R (Rate)</span>
+                    <span class="info-value">Monthly Interest Rate</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">N (Tenure)</span>
+                    <span class="info-value">Number of Monthly Installments</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Processing Fee</span>
+                    <span class="info-value">Additional charges may apply</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Prepayment</span>
+                    <span class="info-value">No charges for most loan types</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('emiForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            calculateEMI();
+        });
+        
+        function calculateEMI() {
+            const loanAmount = parseFloat(document.getElementById('loanAmount').value);
+            const interestRate = parseFloat(document.getElementById('interestRate').value);
+            const tenureYears = parseInt(document.getElementById('tenureYears').value) || 0;
+            const tenureMonths = parseInt(document.getElementById('tenureMonths').value) || 0;
+            
+            if (!loanAmount || !interestRate || (tenureYears === 0 && tenureMonths === 0)) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            const totalMonths = (tenureYears * 12) + tenureMonths;
+            const monthlyRate = interestRate / (12 * 100);
+            
+            const emi = (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, totalMonths)) / 
+                       (Math.pow(1 + monthlyRate, totalMonths) - 1);
+            
+            const totalAmount = emi * totalMonths;
+            const totalInterest = totalAmount - loanAmount;
+            
+            // Display results
+            document.getElementById('monthlyEMI').textContent = '₹' + emi.toFixed(2);
+            document.getElementById('totalAmount').textContent = '₹' + totalAmount.toFixed(2);
+            document.getElementById('totalInterest').textContent = '₹' + totalInterest.toFixed(2);
+            document.getElementById('loanTenure').textContent = totalMonths + ' months';
+            
+            document.getElementById('resultCard').style.display = 'block';
+        }
+        
+        // Auto-calculate when inputs change
+        document.getElementById('loanAmount').addEventListener('input', calculateEMI);
+        document.getElementById('interestRate').addEventListener('input', calculateEMI);
+        document.getElementById('tenureYears').addEventListener('input', calculateEMI);
+        document.getElementById('tenureMonths').addEventListener('input', calculateEMI);
+    </script>
+</body>
+</html>

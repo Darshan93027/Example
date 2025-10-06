@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support - SecureBank</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2c3e50;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .nav-link {
+            color: #666;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        .nav-link:hover {
+            background: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .page-title {
+            text-align: center;
+            color: white;
+            margin-bottom: 2rem;
+        }
+        
+        .page-title h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .page-title p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .support-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .support-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .support-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .support-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .support-title {
+            font-size: 1.3rem;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+        
+        .support-description {
+            color: #7f8c8d;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+            text-align: center;
+        }
+        
+        .support-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            transition: transform 0.3s;
+            font-weight: 500;
+        }
+        
+        .support-btn:hover {
+            transform: scale(1.05);
+            color: white;
+        }
+        
+        .contact-info {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .contact-title {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            text-align: center;
+        }
+        
+        .contact-label {
+            font-weight: 600;
+            color: #34495e;
+        }
+        
+        .contact-value {
+            color: #7f8c8d;
+        }
+        
+        .faq-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .faq-title {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+        
+        .faq-item {
+            margin-bottom: 1rem;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            font-weight: 600;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .faq-question:hover {
+            background: #e9ecef;
+        }
+        
+        .faq-answer {
+            padding: 1rem;
+            color: #7f8c8d;
+            display: none;
+        }
+        
+        .faq-answer.show {
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .support-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="{% url 'index' %}" class="logo">🏦 SecureBank</a>
+            <div class="nav-links">
+                <a href="{% url 'index' %}" class="nav-link">Dashboard</a>
+                <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="page-title">
+            <h1>📞 Customer Support</h1>
+            <p>Get help with your banking needs through our 24/7 customer support</p>
+        </div>
+        
+        <div class="support-grid">
+            <div class="support-card">
+                <div class="support-icon">📞</div>
+                <h3 class="support-title">Phone Support</h3>
+                <p class="support-description">Call our customer service team for immediate assistance with your banking needs.</p>
+                <a href="tel:+91-1800-123-4567" class="support-btn">Call Now</a>
+            </div>
+            
+            <div class="support-card">
+                <div class="support-icon">💬</div>
+                <h3 class="support-title">Live Chat</h3>
+                <p class="support-description">Chat with our support agents in real-time for quick resolution of your queries.</p>
+                <a href="#" class="support-btn">Start Chat</a>
+            </div>
+            
+            <div class="support-card">
+                <div class="support-icon">📧</div>
+                <h3 class="support-title">Email Support</h3>
+                <p class="support-description">Send us an email and we'll get back to you within 24 hours.</p>
+                <a href="mailto:support@securebank.com" class="support-btn">Send Email</a>
+            </div>
+            
+            <div class="support-card">
+                <div class="support-icon">🎫</div>
+                <h3 class="support-title">Ticket Support</h3>
+                <p class="support-description">Create a support ticket for complex issues that require detailed investigation.</p>
+                <a href="#" class="support-btn">Create Ticket</a>
+            </div>
+            
+            <div class="support-card">
+                <div class="support-icon">📱</div>
+                <h3 class="support-title">Mobile App</h3>
+                <p class="support-description">Get support through our mobile banking app with in-app chat and help features.</p>
+                <a href="#" class="support-btn">Download App</a>
+            </div>
+            
+            <div class="support-card">
+                <div class="support-icon">🏢</div>
+                <h3 class="support-title">Branch Visit</h3>
+                <p class="support-description">Visit our nearest branch for face-to-face assistance with complex banking needs.</p>
+                <a href="#" class="support-btn">Find Branch</a>
+            </div>
+        </div>
+        
+        <div class="contact-info">
+            <h3 class="contact-title">📞 Contact Information</h3>
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <span class="contact-label">Customer Care</span>
+                    <span class="contact-value">1800-123-4567</span>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-label">Emergency Hotline</span>
+                    <span class="contact-value">1800-999-8888</span>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-label">Email</span>
+                    <span class="contact-value">support@securebank.com</span>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-label">Working Hours</span>
+                    <span class="contact-value">24/7 Available</span>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-label">Response Time</span>
+                    <span class="contact-value">Within 24 hours</span>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-label">Languages</span>
+                    <span class="contact-value">English, Hindi, Regional</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="faq-section">
+            <h3 class="faq-title">❓ Frequently Asked Questions</h3>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    How do I apply for a loan online?
+                </div>
+                <div class="faq-answer">
+                    You can apply for a loan by visiting our Apply for Loan page, filling out the application form with your details, and submitting it. Our team will review your application and get back to you within 2-3 business days.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    What documents do I need for loan application?
+                </div>
+                <div class="faq-answer">
+                    Required documents include: Identity proof (Aadhar, PAN), Address proof, Income proof (salary slips, bank statements), Employment certificate, and other documents as per loan type. Specific requirements will be communicated after application submission.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    How can I check my loan application status?
+                </div>
+                <div class="faq-answer">
+                    You can check your loan application status by logging into your account and visiting the "My Applications" section. You'll also receive SMS and email updates about your application status.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    What is the minimum credit score required?
+                </div>
+                <div class="faq-answer">
+                    We require a minimum credit score of 650 for most loan products. However, some loan types may have different requirements. Our loan officers will guide you based on your specific situation.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    Can I prepay my loan without charges?
+                </div>
+                <div class="faq-answer">
+                    Yes, most of our loan products allow prepayment without any charges. However, some loan types may have specific terms. Please check your loan agreement or contact our support team for details.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    How do I update my contact information?
+                </div>
+                <div class="faq-answer">
+                    You can update your contact information by visiting the Account Services page and selecting "Update Profile". You can also visit any of our branches with proper identification documents.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleFAQ(element) {
+            const answer = element.nextElementSibling;
+            const isOpen = answer.classList.contains('show');
+            
+            // Close all other FAQs
+            document.querySelectorAll('.faq-answer').forEach(faq => {
+                faq.classList.remove('show');
+            });
+            
+            // Toggle current FAQ
+            if (!isOpen) {
+                answer.classList.add('show');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Conditions - SecureBank</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2c3e50;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .nav-link {
+            color: #666;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        .nav-link:hover {
+            background: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .page-title {
+            text-align: center;
+            color: white;
+            margin-bottom: 2rem;
+        }
+        
+        .page-title h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .page-title p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .content-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .card-title {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .card-content {
+            color: #7f8c8d;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .card-content h4 {
+            color: #2c3e50;
+            margin: 1.5rem 0 0.5rem 0;
+        }
+        
+        .card-content ul {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .card-content li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .highlight-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .highlight-title {
+            color: #856404;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .highlight-text {
+            color: #856404;
+            font-size: 0.9rem;
+        }
+        
+        .last-updated {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: #6c757d;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="{% url 'index' %}" class="logo">🏦 SecureBank</a>
+            <div class="nav-links">
+                <a href="{% url 'index' %}" class="nav-link">Dashboard</a>
+                <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="page-title">
+            <h1>📋 Terms & Conditions</h1>
+            <p>Please read these terms and conditions carefully before using our services</p>
+        </div>
+        
+        <div class="last-updated">
+            <strong>Last Updated:</strong> December 1, 2023
+        </div>
+        
+        <div class="content-card">
+            <h3 class="card-title">Acceptance of Terms</h3>
+            <div class="card-content">
+                <p>By accessing and using SecureBank's banking services, website, mobile applications, and any related services (collectively, the "Services"), you agree to be bound by these Terms and Conditions ("Terms"). If you do not agree to these Terms, please do not use our Services.</p>
+                
+                <p>These Terms constitute a legally binding agreement between you and SecureBank. We reserve the right to modify these Terms at any time, and such modifications will be effective immediately upon posting.</p>
+            </div>
+        </div>
+        
+        <div class="content-card">
+            <h3 class="card-title">Account Registration and Eligibility</h3>
+            <div class="card-content">
+                <h4>Eligibility Requirements</h4>
+                <p>To use our Services, you must:</p>
+                <ul>
+                    <li>Be at least 18 years of age</li>
+                    <li>Be a legal resident of India</li>
+                    <li>Provide accurate and complete information</li>
+                    <li>Have the legal capacity to enter into binding agreements</li>
+                </ul>
+                
+                <h4>Account Registration</h4>
+                <p>When registering for an account, you agree to:</p>
+                <ul>
+                    <li>Provide accurate, current, and complete information</li>
+                    <li>Maintain and update your information as necessary</li>
+                    <li>Keep your login credentials secure and confidential</li>
+                    <li>Notify us immediately of any unauthorized use</li>
+                </ul>
+                
+                <h4>Account Verification</h4>
+                <p>We may require additional verification documents and information to:</p>
+                <ul>
+                    <li>Verify your identity</li>
+                    <li>Comply with regulatory requirements</li>
+                    <li>Prevent fraud and money laundering</li>
+                    <li>Assess creditworthiness for loan products</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="content-card">
+            <h3 class="card-title">Banking Services</h3>
+            <div class="card-content">
+                <h4>Account Services</h4>
+                <p>Our banking services include but are not limited to:</p>
+                <ul>
+                    <li>Savings and current accounts</li>
+                    <li>Fixed deposits and recurring deposits</li>
+                    <li>Personal, home, and business loans</li>
+                    <li>Credit and debit cards</li>
+                    <li>Fund transfers and payments</li>
+                    <li>Investment and insurance products</li>
+                </ul>
+                
+                <h4>Service Availability</h4>
+                <p>We strive to provide continuous service availability, but we do not guarantee uninterrupted access. Services may be temporarily unavailable due to:</p>
+                <ul>
+                    <li>System maintenance and updates</li>
+                    <li>Technical difficulties</li>
+                    <li>Regulatory requirements</li>
+                    <li>Force majeure events</li>
+                </ul>
+                
+                <h4>Transaction Limits</h4>
+                <p>We may impose transaction limits for security purposes. These limits may vary based on:</p>
+                <ul>
+                    <li>Account type and status</li>
+                    <li>Customer verification level</li>
+                    <li>Risk assessment</li>
+                    <li>Regulatory requirements</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="content-card">
+            <h3 class="card-title">Loan Products and Terms</h3>
+                <div class="card-content">
+                <h4>Loan Application Process</h4>
+                <p>When applying for loans, you agree to:</p>
+                <ul>
+                    <li>Provide accurate financial information</li>
+                    <li>Submit required documentation</li>
+                    <li>Allow credit checks and verification</li>
+                    <li>Comply with loan terms and conditions</li>
+                </ul>
+                
+                <h4>Interest Rates and Fees</h4>
+                <p>Interest rates and fees are subject to:</p>
+                <ul>
+                    <li>Market conditions and regulatory changes</li>
+                    <li>Creditworthiness assessment</li>
+                    <li>Loan type and tenure</li>
+                    <li>Promotional offers and terms</li>
+                </ul>
+                
+                <h4>Repayment Obligations</h4>
+                <p>You are responsible for:</p>
+                <ul>
+                    <li>Timely payment of EMIs and interest</li>
+                    <li>Maintaining adequate account balance</li>
+                    <li>Notifying us of any payment difficulties</li>
+                    <li>Complying with prepayment terms</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="content-card">
+            <h3 class="card-title">User Responsibilities</h3>
+            <div class="card-content">
+                <h4>Security Responsibilities</h4>
+                <p>You are responsible for:</p>
+                <ul>
+                    <li>Keeping your login credentials secure</li>
+                    <li>Using strong passwords</li>
+                    <li>Logging out after each session</li>
+                    <li>Reporting suspicious activities immediately</li>
+                </ul>
+                
+                <h4>Prohibited Activities</h4>
+                <p>You agree not to:</p>
+                <ul>
+                    <li>Use the Services for illegal purposes</li>
+                    <li>Attempt to gain unauthorized access</li>
+                    <li>Interfere with system operations</li>
+                    <li>Provide false or misleading information</li>
+                    <li>Violate any applicable laws or regulations</li>
+                </ul>
+                
+                <h4>Compliance</h4>
+                <p>You must comply with:</p>
+                <ul>
+                    <li>All applicable laws and regulations</li>
+                    <li>Anti-money laundering requirements</li>
+                    <li>Know Your Customer (KYC) procedures</li>
+                    <li>Tax reporting obligations</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="highlight-box">
+            <div class="highlight-title">⚠️ Important Notice</div>
+            <div class="highlight-text">
+                Failure to comply with these Terms may result in account suspension, termination of services, or legal action. We reserve the right to take appropriate measures to protect our interests and those of our customers.
+            </div>
+        </div>
+        
+        <div class="content-card">
+            <h3 class="card-title">Privacy and Data Protection</h3>
+            <div class="card-content">
+                <p>Your privacy is important to us. Our collection, use, and protection of your personal information is governed by our Privacy Policy, which is incorporated into these Terms by reference.</p>
+                
+                <h4>Data Collection and Use</h4>
+                <p>We collect and use your information to:</p>
+                <ul>
+                    <li>Provide banking services</li>
+                    <li>Verify your identity</li>
+                    <li>Assess creditworthiness</li>
+                    <li>Comply with regulatory requirements</li>
+                    <li>Prevent fraud and money laundering</li>
+                </ul>
+                
+                <h4>Data Sharing</h4>
+                <p>We may share your information with:</p>
+                <ul>
+                    <li>Credit bureaus and verification agencies</li>
+                    <li>Regulatory authorities</li>
+                    <li>Service providers and partners</li>
+                    <li>Legal authorities when required</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="content-card">
+            <h3 class="card-title">Limitation of Liability</h3>
+            <div class="card-content">
+                <h4>Service Limitations</h4>
+                <p>While we strive to provide reliable services, we cannot guarantee:</p>
+                <ul>
+                    <li>Uninterrupted service availability</li>
+                    <li>Error-free transactions</li>
+                    <li>Complete security against all threats</li>
+                    <li>Compatibility with all devices and browsers</li>
+                </ul>
+                
+                <h4>Liability Limitations</h4>
+                <p>To the maximum extent permitted by law:</p>
+                <ul>
+                    <li>Our liability is limited to the amount of fees paid</li>
+                    <li>We are not liable for indirect or consequential damages</li>
+                    <li>We are not responsible for third-party actions</li>
+                    <li>Force majeure events are excluded from liability</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="content-card">
+            <h3 class="card-title">Dispute Resolution</h3>
+            <div class="card-content">
+                <h4>Grievance Redressal</h4>
+                <p>If you have any complaints or grievances:</p>
+                <ul>
+                    <li>Contact our customer service first</li>
+                    <li>Submit a formal complaint through our channels</li>
+                    <li>Allow reasonable time for resolution</li>
+                    <li>Escalate to banking ombudsman if needed</li>
+                </ul>
+                
+                <h4>Arbitration</h4>
+                <p>Any disputes arising from these Terms will be resolved through:</p>
+                <ul>
+                    <li>Good faith negotiations first</li>
+                    <li>Arbitration in accordance with Indian law</li>
+                    <li>Jurisdiction of courts in Mumbai</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="content-card">
+            <h3 class="card-title">Termination</h3>
+            <div class="card-content">
+                <h4>Account Termination</h4>
+                <p>We may terminate your account if:</p>
+                <ul>
+                    <li>You violate these Terms</li>
+                    <li>You provide false information</li>
+                    <li>You engage in fraudulent activities</li>
+                    <li>You fail to comply with regulatory requirements</li>
+                </ul>
+                
+                <h4>Effect of Termination</h4>
+                <p>Upon termination:</p>
+                <ul>
+                    <li>Your access to Services will cease</li>
+                    <li>Outstanding obligations remain</li>
+                    <li>Data retention policies apply</li>
+                    <li>Refunds subject to terms</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="content-card">
+            <h3 class="card-title">Governing Law</h3>
+            <div class="card-content">
+                <p>These Terms are governed by the laws of India. Any legal proceedings will be subject to the jurisdiction of courts in Mumbai, Maharashtra.</p>
+                
+                <h4>Regulatory Compliance</h4>
+                <p>Our services are subject to regulations by:</p>
+                <ul>
+                    <li>Reserve Bank of India (RBI)</li>
+                    <li>Securities and Exchange Board of India (SEBI)</li>
+                    <li>Insurance Regulatory and Development Authority (IRDAI)</li>
+                    <li>Other relevant regulatory authorities</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="content-card">
+            <h3 class="card-title">Contact Information</h3>
+            <div class="card-content">
+                <p>For questions about these Terms and Conditions, please contact us:</p>
+                
+                <h4>Legal Department</h4>
+                <ul>
+                    <li>Email: legal@securebank.com</li>
+                    <li>Phone: 1800-123-4567</li>
+                    <li>Address: SecureBank Legal Department, Financial District, Mumbai - 400001</li>
+                </ul>
+                
+                <h4>Customer Service</h4>
+                <ul>
+                    <li>Email: support@securebank.com</li>
+                    <li>Phone: 1800-987-6543</li>
+                    <li>Website: www.securebank.com</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

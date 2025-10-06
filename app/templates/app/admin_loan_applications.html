@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Applications - Admin Panel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 {
+            font-size: 28px;
+        }
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .admin-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .logout-btn:hover {
+            background: #c82333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .nav-menu {
+            background: white;
+            padding: 15px 0;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .nav-menu ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+        .nav-menu a {
+            color: #333;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background 0.2s;
+        }
+        .nav-menu a:hover, .nav-menu a.active {
+            background: #667eea;
+            color: white;
+        }
+        .filters {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .filter-group {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        .filter-group select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .filter-btn {
+            background: #667eea;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .filter-btn:hover {
+            background: #5a6fd8;
+        }
+        .section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 20px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        .table th {
+            background: #f8f9fa;
+            font-weight: bold;
+            color: #555;
+        }
+        .table tr:hover {
+            background: #f8f9fa;
+        }
+        .status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .status.pending { background: #fff3cd; color: #856404; }
+        .status.under_review { background: #cce5ff; color: #004085; }
+        .status.approved { background: #d4edda; color: #155724; }
+        .status.rejected { background: #f8d7da; color: #721c24; }
+        .status.disbursed { background: #d1ecf1; color: #0c5460; }
+        .action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            text-decoration: none;
+            display: inline-block;
+            margin: 2px;
+        }
+        .action-btn.view {
+            background: #007bff;
+            color: white;
+        }
+        .action-btn.approve {
+            background: #28a745;
+            color: white;
+        }
+        .action-btn.reject {
+            background: #dc3545;
+            color: white;
+        }
+        .action-btn:hover {
+            opacity: 0.8;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .pagination a {
+            padding: 8px 12px;
+            margin: 0 4px;
+            background: #f8f9fa;
+            color: #333;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        .pagination a:hover {
+            background: #667eea;
+            color: white;
+        }
+        .pagination .current {
+            background: #667eea;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <h1>Loan Applications Management</h1>
+            <div class="admin-info">
+                <div class="admin-badge">ADMIN</div>
+                <span>Welcome, {{ user.get_full_name }}</span>
+                <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="{% url 'admin_dashboard' %}">Dashboard</a></li>
+                <li><a href="{% url 'admin_loan_applications' %}" class="active">Loan Applications</a></li>
+                <li><a href="{% url 'admin_loan_disbursements' %}">Disbursements</a></li>
+                <li><a href="{% url 'admin_emi_tracking' %}">EMI Tracking</a></li>
+                <li><a href="/admin/">Django Admin</a></li>
+            </ul>
+        </nav>
+
+        <div class="filters">
+            <form method="get" class="filter-group">
+                <label for="status">Filter by Status:</label>
+                <select name="status" id="status">
+                    <option value="">All Statuses</option>
+                    {% for value, label in status_choices %}
+                        <option value="{{ value }}" {% if current_filter == value %}selected{% endif %}>
+                            {{ label }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="filter-btn">Filter</button>
+                {% if current_filter %}
+                    <a href="{% url 'admin_loan_applications' %}" class="filter-btn" style="background: #6c757d;">Clear</a>
+                {% endif %}
+            </form>
+        </div>
+
+        <div class="section">
+            <h2>Loan Applications ({{ applications.count }} total)</h2>
+            {% if applications %}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Application ID</th>
+                            <th>Borrower</th>
+                            <th>Loan Type</th>
+                            <th>Requested Amount</th>
+                            <th>Business Experience</th>
+                            <th>Monthly Income</th>
+                            <th>Status</th>
+                            <th>Applied Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for app in applications %}
+                        <tr>
+                            <td>{{ app.application_id|truncatechars:8 }}</td>
+                            <td>{{ app.borrower.get_full_name }}</td>
+                            <td>{{ app.loan_type.name }}</td>
+                            <td>₹{{ app.requested_amount|floatformat:0 }}</td>
+                            <td>{{ app.business_experience_years }} years</td>
+                            <td>₹{{ app.current_monthly_income|floatformat:0 }}</td>
+                            <td><span class="status {{ app.status }}">{{ app.get_status_display }}</span></td>
+                            <td>{{ app.applied_date|date:"M d, Y" }}</td>
+                            <td>
+                                <a href="/admin/app/loanapplication/{{ app.id }}/change/" class="action-btn view">View Details</a>
+                                {% if app.status == 'pending' %}
+                                    <a href="#" class="action-btn approve">Approve</a>
+                                    <a href="#" class="action-btn reject">Reject</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>No loan applications found.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

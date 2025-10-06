@@ -1,0 +1,367 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Loan Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 {
+            font-size: 28px;
+        }
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .admin-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .logout-btn:hover {
+            background: #c82333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        .card-title {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .card-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .card-subtitle {
+            font-size: 12px;
+            color: #999;
+        }
+        .card.loans { border-left: 4px solid #28a745; }
+        .card.accounts { border-left: 4px solid #007bff; }
+        .card.pending { border-left: 4px solid #ffc107; }
+        .card.overdue { border-left: 4px solid #dc3545; }
+        .section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 20px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        .table th {
+            background: #f8f9fa;
+            font-weight: bold;
+            color: #555;
+        }
+        .status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .status.pending { background: #fff3cd; color: #856404; }
+        .status.approved { background: #d4edda; color: #155724; }
+        .status.rejected { background: #f8d7da; color: #721c24; }
+        .status.disbursed { background: #d1ecf1; color: #0c5460; }
+        .nav-menu {
+            background: white;
+            padding: 15px 0;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .nav-menu ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+        .nav-menu a {
+            color: #333;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background 0.2s;
+        }
+        .nav-menu a:hover, .nav-menu a.active {
+            background: #667eea;
+            color: white;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <h1>Admin Dashboard</h1>
+            <div class="admin-info">
+                <div class="admin-badge">ADMIN</div>
+                <span>Welcome, {{ user.get_full_name }}</span>
+                <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="{% url 'admin_dashboard' %}" class="active">Dashboard</a></li>
+                <li><a href="{% url 'admin_banking_portal' %}">Banking Portal</a></li>
+                <li><a href="{% url 'admin_loan_applications' %}">Applications</a></li>
+                <li><a href="{% url 'admin_loan_disbursements' %}">Disbursements</a></li>
+                <li><a href="{% url 'admin_emi_tracking' %}">EMI Tracking</a></li>
+                <li><a href="{% url 'admin_loan_types' %}">Loan Types</a></li>
+                <li><a href="{% url 'admin_interest_rates' %}">Interest Rates</a></li>
+                <li><a href="{% url 'admin_emi_calculator' %}">EMI Calculator</a></li>
+                <li><a href="{% url 'admin_user_management' %}">User Management</a></li>
+                <li><a href="/admin/">Django Admin</a></li>
+            </ul>
+        </nav>
+
+        <!-- Overview Cards -->
+        <div class="dashboard-grid">
+            <div class="card loans">
+                <div class="card-icon">💰</div>
+                <div class="card-title">Total Loans Disbursed</div>
+                <div class="card-value">₹{{ total_loans_disbursed|floatformat:0 }}</div>
+                <div class="card-subtitle">All time disbursements</div>
+            </div>
+            
+            <div class="card accounts">
+                <div class="card-icon">📊</div>
+                <div class="card-title">Active EMI Accounts</div>
+                <div class="card-value">{{ active_emi_accounts }}</div>
+                <div class="card-subtitle">Currently active loans</div>
+            </div>
+            
+            <div class="card pending">
+                <div class="card-icon">⏳</div>
+                <div class="card-title">Pending Payments</div>
+                <div class="card-value">{{ pending_payments }}</div>
+                <div class="card-subtitle">Due for payment</div>
+            </div>
+            
+            <div class="card overdue">
+                <div class="card-icon">🚨</div>
+                <div class="card-title">Overdue Payments</div>
+                <div class="card-value">{{ overdue_payments }}</div>
+                <div class="card-subtitle">Requires attention</div>
+            </div>
+        </div>
+
+        <!-- Monthly Statistics -->
+        <div class="section">
+            <h2>Monthly Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value">₹{{ monthly_disbursements|floatformat:0 }}</div>
+                    <div class="stat-label">This Month Disbursements</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">₹{{ monthly_payments|floatformat:0 }}</div>
+                    <div class="stat-label">This Month Payments</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Applications -->
+        <div class="section">
+            <h2>Recent Loan Applications</h2>
+            {% if recent_applications %}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Application ID</th>
+                            <th>Borrower</th>
+                            <th>Loan Type</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Applied Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for app in recent_applications %}
+                        <tr>
+                            <td>{{ app.application_id|truncatechars:8 }}</td>
+                            <td>{{ app.borrower.get_full_name }}</td>
+                            <td>{{ app.loan_type.name }}</td>
+                            <td>₹{{ app.requested_amount|floatformat:0 }}</td>
+                            <td><span class="status {{ app.status }}">{{ app.get_status_display }}</span></td>
+                            <td>{{ app.applied_date|date:"M d, Y" }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>No recent applications found.</p>
+            {% endif %}
+        </div>
+
+        <!-- Recent Disbursements -->
+        <div class="section">
+            <h2>Recent Disbursements</h2>
+            {% if recent_disbursements %}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Loan ID</th>
+                            <th>Borrower</th>
+                            <th>Amount</th>
+                            <th>EMI Amount</th>
+                            <th>Disbursement Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for disb in recent_disbursements %}
+                        <tr>
+                            <td>{{ disb.loan_application.application_id|truncatechars:8 }}</td>
+                            <td>{{ disb.loan_application.borrower.get_full_name }}</td>
+                            <td>₹{{ disb.approved_amount|floatformat:0 }}</td>
+                            <td>₹{{ disb.emi_amount|floatformat:0 }}</td>
+                            <td>{{ disb.disbursement_date|date:"M d, Y" }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>No recent disbursements found.</p>
+            {% endif %}
+        </div>
+
+        <!-- Loan Type Statistics -->
+        <div class="section">
+            <h2>Loan Type Distribution</h2>
+            {% if loan_type_stats %}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Loan Type</th>
+                            <th>Total Applications</th>
+                            <th>Disbursed</th>
+                            <th>Success Rate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for stat in loan_type_stats %}
+                        <tr>
+                            <td>{{ stat.name }}</td>
+                            <td>{{ stat.application_count }}</td>
+                            <td>{{ stat.disbursed_count }}</td>
+                            <td>
+                                {% if stat.application_count > 0 %}
+                                    {{ stat.disbursed_count|floatformat:0 }}/{{ stat.application_count }} 
+                                    ({{ stat.disbursed_count|floatformat:0|div:stat.application_count|floatformat:1|mul:100 }}%)
+                                {% else %}
+                                    0%
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>No loan type statistics available.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

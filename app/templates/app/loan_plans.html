@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Plans - SecureBank</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2c3e50;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .nav-link {
+            color: #666;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        .nav-link:hover {
+            background: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .page-title {
+            text-align: center;
+            color: white;
+            margin-bottom: 2rem;
+        }
+        
+        .page-title h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .page-title p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .plan-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .plan-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .plan-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .plan-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .plan-title {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+        
+        .plan-subtitle {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        .plan-features {
+            margin-bottom: 2rem;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            color: #34495e;
+        }
+        
+        .feature-icon {
+            margin-right: 0.5rem;
+            color: #27ae60;
+        }
+        
+        .plan-amount {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .amount-range {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .interest-rate {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .plan-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            text-decoration: none;
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            font-weight: 500;
+            transition: transform 0.3s;
+        }
+        
+        .plan-btn:hover {
+            transform: scale(1.05);
+            color: white;
+        }
+        
+        .info-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .info-title {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #34495e;
+        }
+        
+        .info-value {
+            color: #7f8c8d;
+        }
+        
+        @media (max-width: 768px) {
+            .plans-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="{% url 'index' %}" class="logo">🏦 SecureBank</a>
+            <div class="nav-links">
+                <a href="{% url 'index' %}" class="nav-link">Dashboard</a>
+                <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="page-title">
+            <h1>📊 Our Loan Plans</h1>
+            <p>Choose the perfect loan plan that suits your financial needs</p>
+        </div>
+        
+        <div class="plans-grid">
+            <div class="plan-card">
+                <div class="plan-header">
+                    <div class="plan-icon">🏠</div>
+                    <h3 class="plan-title">Home Loan</h3>
+                    <p class="plan-subtitle">Make your dream home a reality</p>
+                </div>
+                
+                <div class="plan-features">
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Up to ₹5 Crores</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Flexible tenure up to 30 years</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Competitive interest rates</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Quick approval process</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>No prepayment charges</span>
+                    </div>
+                </div>
+                
+                <div class="plan-amount">
+                    <div class="amount-range">₹10 Lakhs - ₹5 Crores</div>
+                    <div class="interest-rate">Starting from 8.5% p.a.</div>
+                </div>
+                
+                <a href="{% url 'apply_loan' %}" class="plan-btn">Apply Now</a>
+            </div>
+            
+            <div class="plan-card">
+                <div class="plan-header">
+                    <div class="plan-icon">👤</div>
+                    <h3 class="plan-title">Personal Loan</h3>
+                    <p class="plan-subtitle">For all your personal needs</p>
+                </div>
+                
+                <div class="plan-features">
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Up to ₹25 Lakhs</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Tenure up to 5 years</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>No collateral required</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Instant approval</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Flexible EMI options</span>
+                    </div>
+                </div>
+                
+                <div class="plan-amount">
+                    <div class="amount-range">₹50,000 - ₹25 Lakhs</div>
+                    <div class="interest-rate">Starting from 10.5% p.a.</div>
+                </div>
+                
+                <a href="{% url 'apply_loan' %}" class="plan-btn">Apply Now</a>
+            </div>
+            
+            <div class="plan-card">
+                <div class="plan-header">
+                    <div class="plan-icon">🏢</div>
+                    <h3 class="plan-title">Business Loan</h3>
+                    <p class="plan-subtitle">Fuel your business growth</p>
+                </div>
+                
+                <div class="plan-features">
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Up to ₹2 Crores</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Tenure up to 10 years</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Working capital support</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Flexible repayment</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Dedicated relationship manager</span>
+                    </div>
+                </div>
+                
+                <div class="plan-amount">
+                    <div class="amount-range">₹1 Lakh - ₹2 Crores</div>
+                    <div class="interest-rate">Starting from 9.5% p.a.</div>
+                </div>
+                
+                <a href="{% url 'apply_loan' %}" class="plan-btn">Apply Now</a>
+            </div>
+            
+            <div class="plan-card">
+                <div class="plan-header">
+                    <div class="plan-icon">🎓</div>
+                    <h3 class="plan-title">Education Loan</h3>
+                    <p class="plan-subtitle">Invest in your future</p>
+                </div>
+                
+                <div class="plan-features">
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Up to ₹50 Lakhs</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Moratorium period available</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Coverage for all courses</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Tax benefits under Section 80E</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>No margin for premier institutes</span>
+                    </div>
+                </div>
+                
+                <div class="plan-amount">
+                    <div class="amount-range">₹50,000 - ₹50 Lakhs</div>
+                    <div class="interest-rate">Starting from 8.0% p.a.</div>
+                </div>
+                
+                <a href="{% url 'apply_loan' %}" class="plan-btn">Apply Now</a>
+            </div>
+            
+            <div class="plan-card">
+                <div class="plan-header">
+                    <div class="plan-icon">🚗</div>
+                    <h3 class="plan-title">Vehicle Loan</h3>
+                    <p class="plan-subtitle">Drive your dreams</p>
+                </div>
+                
+                <div class="plan-features">
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Up to ₹50 Lakhs</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Tenure up to 7 years</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>100% on-road price funding</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Quick processing</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Competitive rates</span>
+                    </div>
+                </div>
+                
+                <div class="plan-amount">
+                    <div class="amount-range">₹1 Lakh - ₹50 Lakhs</div>
+                    <div class="interest-rate">Starting from 7.5% p.a.</div>
+                </div>
+                
+                <a href="{% url 'apply_loan' %}" class="plan-btn">Apply Now</a>
+            </div>
+            
+            <div class="plan-card">
+                <div class="plan-header">
+                    <div class="plan-icon">💎</div>
+                    <h3 class="plan-title">Gold Loan</h3>
+                    <p class="plan-subtitle">Unlock the value of your gold</p>
+                </div>
+                
+                <div class="plan-features">
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Up to ₹50 Lakhs</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Tenure up to 3 years</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Instant disbursement</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Safe gold storage</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Flexible repayment options</span>
+                    </div>
+                </div>
+                
+                <div class="plan-amount">
+                    <div class="amount-range">₹10,000 - ₹50 Lakhs</div>
+                    <div class="interest-rate">Starting from 9.0% p.a.</div>
+                </div>
+                
+                <a href="{% url 'apply_loan' %}" class="plan-btn">Apply Now</a>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <h3 class="info-title">📋 General Terms & Conditions</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Processing Fee</span>
+                    <span class="info-value">Up to 2% of loan amount</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Prepayment Charges</span>
+                    <span class="info-value">Nil for most loan types</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Processing Time</span>
+                    <span class="info-value">2-7 business days</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Minimum Age</span>
+                    <span class="info-value">21 years</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Maximum Age</span>
+                    <span class="info-value">65 years</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Credit Score</span>
+                    <span class="info-value">Minimum 650 required</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

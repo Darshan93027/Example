@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced EMI Calculator - Admin Panel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 {
+            font-size: 28px;
+        }
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .admin-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .logout-btn:hover {
+            background: #c82333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .nav-menu {
+            background: white;
+            padding: 15px 0;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .nav-menu ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        .nav-menu a {
+            color: #333;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background 0.2s;
+        }
+        .nav-menu a:hover, .nav-menu a.active {
+            background: #667eea;
+            color: white;
+        }
+        .calculator-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .calculator-container h2 {
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 24px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .form-row-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #5a6fd8;
+        }
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        .error {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .help-text {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+        .results-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 30px;
+            border-left: 4px solid #28a745;
+        }
+        .results-section h3 {
+            color: #28a745;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .result-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .result-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+        .result-card .value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+        .calculation-details {
+            background: #e7f3ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border-left: 4px solid #0066cc;
+        }
+        .calculation-details h4 {
+            color: #0066cc;
+            margin-bottom: 15px;
+        }
+        .calculation-details p {
+            margin: 8px 0;
+            font-size: 14px;
+        }
+        .info-box {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #ffc107;
+        }
+        .info-box h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        .info-box p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #856404;
+        }
+        .back-link {
+            margin-bottom: 20px;
+        }
+        .back-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: #667eea;
+        }
+        .amount-options {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .amount-options h4 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        .amount-options p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <h1>Advanced EMI Calculator</h1>
+            <div class="admin-info">
+                <div class="admin-badge">ADMIN</div>
+                <span>Welcome, {{ user.get_full_name }}</span>
+                <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="{% url 'admin_dashboard' %}">Dashboard</a></li>
+                <li><a href="{% url 'admin_loan_applications' %}">Applications</a></li>
+                <li><a href="{% url 'admin_loan_disbursements' %}">Disbursements</a></li>
+                <li><a href="{% url 'admin_emi_tracking' %}">EMI Tracking</a></li>
+                <li><a href="{% url 'admin_loan_types' %}">Loan Types</a></li>
+                <li><a href="{% url 'admin_interest_rates' %}">Interest Rates</a></li>
+                <li><a href="{% url 'admin_loan_amount_slabs' %}">Amount Slabs</a></li>
+                <li><a href="{% url 'admin_emi_configurations' %}">EMI Configurations</a></li>
+                <li><a href="{% url 'admin_emi_calculator' %}">EMI Calculator</a></li>
+                <li><a href="{% url 'admin_advanced_emi_calculator' %}" class="active">Advanced Calculator</a></li>
+                <li><a href="/admin/">Django Admin</a></li>
+            </ul>
+        </nav>
+
+        <div class="back-link">
+            <a href="{% url 'admin_dashboard' %}">← Back to Dashboard</a>
+        </div>
+
+        <div class="info-box">
+            <h4>🧮 Advanced EMI Calculator</h4>
+            <p>This calculator allows you to calculate EMI for any loan amount using existing loan types, amount slabs, and interest rates. You can either select a predefined amount slab or enter a custom amount within the slab range.</p>
+        </div>
+
+        <div class="calculator-container">
+            <h2>Calculate EMI</h2>
+            
+            {% if form.non_field_errors %}
+                <div class="error" style="margin-bottom: 20px;">
+                    {% for error in form.non_field_errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            
+            <form method="post" id="emi-calculator-form">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="{{ form.loan_type.id_for_label }}">Loan Type:</label>
+                    {{ form.loan_type }}
+                    {% if form.loan_type.errors %}
+                        <div class="error">{{ form.loan_type.errors.0 }}</div>
+                    {% endif %}
+                    <div class="help-text">Select the loan type to get available amount slabs and interest rates</div>
+                </div>
+                
+                <div class="amount-options">
+                    <h4>Amount Options:</h4>
+                    <p>You can either select a predefined amount slab or enter a custom amount. If you select both, the custom amount must be within the selected slab range.</p>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="{{ form.amount_slab.id_for_label }}">Amount Slab (Optional):</label>
+                        {{ form.amount_slab }}
+                        {% if form.amount_slab.errors %}
+                            <div class="error">{{ form.amount_slab.errors.0 }}</div>
+                        {% endif %}
+                        <div class="help-text">Select a predefined amount slab</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.custom_amount.id_for_label }}">Custom Amount (Optional):</label>
+                        {{ form.custom_amount }}
+                        {% if form.custom_amount.errors %}
+                            <div class="error">{{ form.custom_amount.errors.0 }}</div>
+                        {% endif %}
+                        <div class="help-text">Enter a custom loan amount</div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.interest_rate.id_for_label }}">Interest Rate:</label>
+                    {{ form.interest_rate }}
+                    {% if form.interest_rate.errors %}
+                        <div class="error">{{ form.interest_rate.errors.0 }}</div>
+                    {% endif %}
+                    <div class="help-text">Select the interest rate for calculation</div>
+                </div>
+                
+                <div class="form-row-3">
+                    <div class="form-group">
+                        <label for="{{ form.tenure_months.id_for_label }}">Tenure (Months):</label>
+                        {{ form.tenure_months }}
+                        {% if form.tenure_months.errors %}
+                            <div class="error">{{ form.tenure_months.errors.0 }}</div>
+                        {% endif %}
+                        <div class="help-text">Loan tenure in months</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.frequency.id_for_label }}">Payment Frequency:</label>
+                        {{ form.frequency }}
+                        {% if form.frequency.errors %}
+                            <div class="error">{{ form.frequency.errors.0 }}</div>
+                        {% endif %}
+                        <div class="help-text">How often payments are made</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>&nbsp;</label>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Calculate EMI</button>
+                    </div>
+                </div>
+            </form>
+            
+            <div class="loading" id="loading">
+                <p>Calculating EMI...</p>
+            </div>
+            
+            {% if calculation_result %}
+                <div class="results-section">
+                    <h3>📊 EMI Calculation Results</h3>
+                    
+                    <div class="results-grid">
+                        <div class="result-card">
+                            <h4>Loan Amount</h4>
+                            <div class="value">₹{{ calculation_result.loan_amount|floatformat:2 }}</div>
+                        </div>
+                        <div class="result-card">
+                            <h4>EMI Amount</h4>
+                            <div class="value">₹{{ calculation_result.emi_amount|floatformat:2 }}</div>
+                        </div>
+                        <div class="result-card">
+                            <h4>Total Interest</h4>
+                            <div class="value">₹{{ calculation_result.total_interest|floatformat:2 }}</div>
+                        </div>
+                        <div class="result-card">
+                            <h4>Total Repayment</h4>
+                            <div class="value">₹{{ calculation_result.total_repayment|floatformat:2 }}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="calculation-details">
+                        <h4>📋 Calculation Details:</h4>
+                        <p><strong>Interest Rate:</strong> {{ calculation_result.annual_rate }}% per annum</p>
+                        <p><strong>Monthly Interest Rate:</strong> {{ calculation_result.monthly_rate|floatformat:4 }}%</p>
+                        <p><strong>Tenure:</strong> {{ calculation_result.months }} months</p>
+                        <p><strong>Payment Frequency:</strong> {{ calculation_result.frequency|title }}</p>
+                        <p><strong>Formula Used:</strong> Standard EMI formula with compound interest</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        // Dynamic form updates based on loan type selection
+        document.addEventListener('DOMContentLoaded', function() {
+            const loanTypeSelect = document.getElementById('id_loan_type');
+            const amountSlabSelect = document.getElementById('id_amount_slab');
+            const interestRateSelect = document.getElementById('id_interest_rate');
+            
+            if (loanTypeSelect) {
+                loanTypeSelect.addEventListener('change', function() {
+                    const loanTypeId = this.value;
+                    
+                    if (loanTypeId) {
+                        // Fetch amount slabs and interest rates for selected loan type
+                        fetch(`/admin/get-loan-type-data/?loan_type_id=${loanTypeId}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                // Update amount slabs
+                                amountSlabSelect.innerHTML = '<option value="">Select Amount Slab (Optional)</option>';
+                                data.amount_slabs.forEach(slab => {
+                                    const option = document.createElement('option');
+                                    option.value = slab.id;
+                                    option.textContent = `${slab.slab_name} (₹${slab.min_amount} - ₹${slab.max_amount})`;
+                                    amountSlabSelect.appendChild(option);
+                                });
+                                
+                                // Update interest rates
+                                interestRateSelect.innerHTML = '<option value="">Select Interest Rate</option>';
+                                data.interest_rates.forEach(rate => {
+                                    const option = document.createElement('option');
+                                    option.value = rate.id;
+                                    option.textContent = `${rate.annual_rate}% per annum (${rate.description})`;
+                                    interestRateSelect.appendChild(option);
+                                });
+                            })
+                            .catch(error => {
+                                console.error('Error fetching loan type data:', error);
+                            });
+                    } else {
+                        // Clear options if no loan type selected
+                        amountSlabSelect.innerHTML = '<option value="">Select Amount Slab (Optional)</option>';
+                        interestRateSelect.innerHTML = '<option value="">Select Interest Rate</option>';
+                    }
+                });
+            }
+            
+            // Show loading state on form submission
+            const form = document.getElementById('emi-calculator-form');
+            if (form) {
+                form.addEventListener('submit', function() {
+                    document.getElementById('loading').style.display = 'block';
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .button {
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .button:hover {
+            background-color: #1e7e34;
+        }
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .back-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+            background-color: #ffe6e6;
+            padding: 5px;
+            border-radius: 3px;
+            border: 1px solid #ffcccc;
+        }
+        .help-text {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+        .help-text ul {
+            margin: 5px 0;
+            padding-left: 20px;
+        }
+        .help-text li {
+            margin-bottom: 3px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sign Up</h1>
+    
+    {% if form.non_field_errors %}
+        <div class="error" style="margin-bottom: 20px;">
+            {% for error in form.non_field_errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
+    {% endif %}
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="id_username">Username:</label>
+            <input type="text" id="id_username" name="username" value="{{ form.username.value|default:'' }}" required>
+            {% if form.username.errors %}
+                <div class="error">{{ form.username.errors.0 }}</div>
+            {% endif %}
+            <div class="help-text">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</div>
+        </div>
+        
+        <div class="form-group">
+            <label for="id_first_name">First Name:</label>
+            <input type="text" id="id_first_name" name="first_name" value="{{ form.first_name.value|default:'' }}" required>
+            {% if form.first_name.errors %}
+                <div class="error">{{ form.first_name.errors.0 }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="id_last_name">Last Name:</label>
+            <input type="text" id="id_last_name" name="last_name" value="{{ form.last_name.value|default:'' }}" required>
+            {% if form.last_name.errors %}
+                <div class="error">{{ form.last_name.errors.0 }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="id_email">Email:</label>
+            <input type="email" id="id_email" name="email" value="{{ form.email.value|default:'' }}" required>
+            {% if form.email.errors %}
+                <div class="error">{{ form.email.errors.0 }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="id_phone">Phone:</label>
+            <input type="text" id="id_phone" name="phone" value="{{ form.phone.value|default:'' }}" required>
+            {% if form.phone.errors %}
+                <div class="error">{{ form.phone.errors.0 }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="id_password1">Password:</label>
+            <input type="password" id="id_password1" name="password1" required>
+            {% if form.password1.errors %}
+                <div class="error">{{ form.password1.errors.0 }}</div>
+            {% endif %}
+            <div class="help-text">
+                <ul>
+                    <li>Your password can't be too similar to your other personal information.</li>
+                    <li>Your password must contain at least 8 characters.</li>
+                    <li>Your password can't be a commonly used password.</li>
+                    <li>Your password can't be entirely numeric.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="id_password2">Confirm Password:</label>
+            <input type="password" id="id_password2" name="password2" required>
+            {% if form.password2.errors %}
+                <div class="error">{{ form.password2.errors.0 }}</div>
+            {% endif %}
+            <div class="help-text">Enter the same password as before, for verification.</div>
+        </div>
+        
+        <button type="submit" class="button">Sign Up</button>
+    </form>
+    
+    <div class="back-link">
+        <a href="{% url 'landing' %}">← Back to Home</a>
+    </div>
+</body>
+</html>
